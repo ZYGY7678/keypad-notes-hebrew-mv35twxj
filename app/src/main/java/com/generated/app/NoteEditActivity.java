@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,7 +53,7 @@ public class NoteEditActivity extends Activity {
             }
             btnDelete.setVisibility(View.VISIBLE);
         } else {
-            tvHeaderTitle.setText("הערה חדשה");
+            tvHeaderTitle.setText(R.string.new_note_title);
             tvEditDate.setText(dateFormat.format(new Date(System.currentTimeMillis())));
             btnDelete.setVisibility(View.GONE);
         }
@@ -73,7 +72,6 @@ public class NoteEditActivity extends Activity {
             }
         });
 
-        // Set initial focus to Title for keypad input
         etTitle.requestFocus();
     }
 
@@ -82,7 +80,7 @@ public class NoteEditActivity extends Activity {
         String content = etContent.getText() != null ? etContent.getText().toString().trim() : "";
 
         if (title.isEmpty() && content.isEmpty()) {
-            Toast.makeText(this, "הערה ריקה לא נשמרה", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.empty_note_not_saved, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -116,24 +114,5 @@ public class NoteEditActivity extends Activity {
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // Physical key 1 -> Save
-        if (keyCode == KeyEvent.KEYCODE_1) {
-            if (!etTitle.hasFocus() && !etContent.hasFocus()) {
-                saveNote();
-                return true;
-            }
-        }
-        // Physical key 2 -> Delete
-        if (keyCode == KeyEvent.KEYCODE_2 && noteId != -1) {
-            if (!etTitle.hasFocus() && !etContent.hasFocus()) {
-                confirmDelete();
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
     }
 }

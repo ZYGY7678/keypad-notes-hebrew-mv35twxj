@@ -2,13 +2,11 @@ package com.generated.app;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +54,6 @@ public class MainActivity extends Activity {
 
         adapter = new NoteAdapter();
         listNotes.setAdapter(adapter);
-
-        // Keypad selection mode: keep selected items visible
         listNotes.setItemsCanFocus(true);
 
         btnNewNote.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +95,6 @@ public class MainActivity extends Activity {
         });
 
         loadNotes("");
-        // Ensure default focus on the New Note button for keypad users
         btnNewNote.requestFocus();
     }
 
@@ -171,36 +166,6 @@ public class MainActivity extends Activity {
                 .show();
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // Physical key 1 -> New Note shortcut
-        if (keyCode == KeyEvent.KEYCODE_1) {
-            if (!etSearch.hasFocus()) {
-                openNoteEditor(-1);
-                return true;
-            }
-        }
-        // Physical key 2 -> Delete currently selected item shortcut
-        if (keyCode == KeyEvent.KEYCODE_2) {
-            if (!etSearch.hasFocus()) {
-                int pos = listNotes.getSelectedItemPosition();
-                if (pos >= 0 && pos < noteList.size()) {
-                    confirmDelete(noteList.get(pos));
-                    return true;
-                }
-            }
-        }
-        // Physical Menu key -> Options on selected note
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
-            int pos = listNotes.getSelectedItemPosition();
-            if (pos >= 0 && pos < noteList.size()) {
-                showNoteOptionsDialog(noteList.get(pos));
-                return true;
-            }
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
     private class NoteAdapter extends BaseAdapter {
 
         @Override
@@ -225,7 +190,6 @@ public class MainActivity extends Activity {
                 convertView = LayoutInflater.from(MainActivity.this)
                         .inflate(R.layout.item_note, parent, false);
                 holder = new ViewHolder();
-                holder.tvIndex = (TextView) convertView.findViewById(R.id.item_tv_index);
                 holder.tvTitle = (TextView) convertView.findViewById(R.id.item_tv_title);
                 holder.tvDate = (TextView) convertView.findViewById(R.id.item_tv_date);
                 holder.tvSnippet = (TextView) convertView.findViewById(R.id.item_tv_snippet);
@@ -235,17 +199,16 @@ public class MainActivity extends Activity {
             }
 
             Note note = noteList.get(position);
-            holder.tvIndex.setText(String.valueOf(position + 1));
 
             String title = note.getTitle().trim();
             if (title.isEmpty()) {
-                title = "(ללא כותרת)";
+                title = getString(R.string.untitled_note);
             }
             holder.tvTitle.setText(title);
 
             String content = note.getContent().trim();
             if (content.isEmpty()) {
-                holder.tvSnippet.setText("(ללא תוכן)");
+                holder.tvSnippet.setText(getString(R.string.no_content));
             } else {
                 holder.tvSnippet.setText(content);
             }
@@ -257,7 +220,6 @@ public class MainActivity extends Activity {
     }
 
     private static class ViewHolder {
-        TextView tvIndex;
         TextView tvTitle;
         TextView tvDate;
         TextView tvSnippet;
