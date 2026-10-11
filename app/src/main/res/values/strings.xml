@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">הערות מקשים</string>
+    <string name="new_note">הערה חדשה (מקש 1)</string>
+    <string name="edit_note_title">עריכת הערה</string>
+    <string name="note_title_hint">כותרת ההערה...</string>
+    <string name="note_content_hint">תוכן ההערה...</string>
+    <string name="save_note">שמור הערה (מקש 1)</string>
+    <string name="delete_note">מחק הערה (מקש 2)</string>
+    <string name="cancel">ביטול</string>
+    <string name="delete">מחק</string>
+    <string name="edit">ערוך</string>
+    <string name="search_hint">חיפוש בהערות...</string>
+    <string name="empty_notes_title">אין הערות שמורות</string>
+    <string name="empty_notes_subtitle">לחצו על \"הערה חדשה\" או על מקש 1 כדי להתחיל</string>
+    <string name="keypad_hints">ניווט: חצים | אישור: מקש אמצעי | 1: חדש | 2: מחיקה</string>
+    <string name="confirm_delete_title">מחיקת הערה</string>
+    <string name="confirm_delete_message">האם למחוק הערה זו לצמיתות?</string>
+    <string name="note_saved">ההערה נשמרה בהצלחה</string>
+    <string name="note_deleted">ההערה נמחקה</string>
+    <string name="options_dialog_title">אפשרויות להערה</string>
+    <string name="count_notes_format">%d הערות</string>
+</resources>
